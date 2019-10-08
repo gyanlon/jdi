@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-import Test from '../components/Test'
+import Exam from '../components/Exam'
 import Menu from '../components/Menu'
 Vue.use(Router)
 
@@ -9,9 +9,9 @@ Vue.use(Router)
 export default new Router({
   routes: [
     {
-        path: '/test',
-        name: 'Test',
-        component: Test
+        path: '/exam',
+        name: 'Exam',
+        component: Exam
     },
     {
         path: '/menu',
