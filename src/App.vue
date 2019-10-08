@@ -1,24 +1,33 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <div class="container">
+      <div class="header">
+        <div class="title">
+          <span>Jimmy 测验小站</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="aboutme" style="“”">
+      <h2 class="ab_title" style=" color: blue; cursor: wait; " @click="startTest">新的测验</h2>
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
 export default {
-  name: 'app',
-  components: {
-    HelloWorld
-  }
-}
+  name: "app",
+  methods: {
+		startTest () {
+      
+		}
+	}
+};
 </script>
 
 <style>
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;

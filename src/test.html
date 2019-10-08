@@ -1,0 +1,118 @@
+<html>
+
+<head>
+    <title>基于vue+elementui</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="lib/elementui/theme-chalk/index.css" type="text/css">
+    <style>
+        body {
+            margin: 0px;
+            background-color: #4b595f;
+        }
+
+        /* 所有 */
+        #app {
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            width: 1000px;
+            display: block;
+		    margin: auto;
+        }
+
+        .container.content {
+            margin-top: 100px !important;
+            height: 400px;
+            line-height: 400px;
+            background-color: #ffffff;
+        }    
+
+        .container.button {
+            height: 100px;
+            line-height: 100px;
+            position: relative;
+        }  
+
+        .container.button > input.primary-button{
+            position: absolute;
+            right: 0px;
+        } 
+
+        .container.result {
+            height: 200px;
+            line-height: 200px;
+        } 
+
+        tbody {
+            font-size: 15px;
+        }
+
+    </style>
+</head>
+<body>
+<div id="app">
+    <div class="container content" >
+         <question></question>       
+    </div>
+    <div class="container button">
+        <input type="button" class="primary-button" @click="check" value="做完了"/>
+    </div>
+        
+    <div class="container result" v-if="resultMessage" >
+        {{resultMessage}}
+    </div>
+</div>
+<!-- 引入组件库 -->
+<script type="text/javascript" src="lib/vue.js"></script>
+<script type="text/javascript" src="lib/elementui/index.js"></script>
+
+<script type="text/javascript">
+    Vue.component('question', {
+        template: `<div>3 X 5 = <input id="answer1" @change="change"/></div>`,
+        methods: {
+            change: function (event) {
+                console.log(event.target.id, event.target.value)
+                vm.answers[event.target.id] = event.target.value;
+
+                // 正确答案
+                vm.successes["answer1"] = "15";
+            }
+        }
+    });
+
+    var vm = new Vue({
+        el: "#app",
+        data: {
+            questions: [],
+            answers: {},
+            successes: {},
+            resultMessage: ""
+        },
+        methods: {
+            check: function() {
+                console.log(JSON.stringify(vm.answers));
+
+                var correctCount = 0;
+                var totalCount = 0;
+                for (const [key, value] of Object.entries(vm.successes)) {
+                    totalCount ++;
+                    if( vm.answers[key] && vm.answers[key] === vm.successes[key]){
+                        correctCount ++;
+                    }
+                }
+
+                // 检查回答和正确答案是否匹配
+                // 打分
+                vm.resultMessage = correctCount/totalCount * 100 + "分";
+            }
+        }
+    });
+
+</script>
+
+</body>
+
+</html>
