@@ -8,8 +8,8 @@
       </div>
     </div>
 
-    <div class="aboutme" style="“”">
-      <h2 class="ab_title" style=" color: blue; cursor: wait; " @click="startTest">新的测验</h2>
+    <div>
+      <router-view></router-view>
     </div>
   </div>
 </template>
@@ -21,7 +21,10 @@ export default {
 		startTest () {
       
 		}
-	}
+  },
+  created:function(){
+       this.$router.push('menu'); // 页面加载时跳转
+  }
 };
 </script>
 

@@ -1,10 +1,41 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+
+import Test from '../components/Test'
+import Menu from '../components/Menu'
 Vue.use(Router)
 
 //export default 是对外暴露这个配置
 export default new Router({
-  routes: []
+  routes: [
+    {
+        path: '/test',
+        name: 'Test',
+        component: Test
+    },
+    {
+        path: '/menu',
+        name: 'Menu',
+        component: Menu
+    }
+    // {
+    //     path: '/main',
+    //     name: 'Main',
+    //     component: Main
+    // },
+    // {
+    //     path: '/person',
+    //     name: 'Person',
+    //     component: Person,
+    //     children: [
+    //       {
+    //         path: 'user',
+    //         name: 'User',
+    //         component: User
+    //       }
+    //     ]
+    // }
+  ]
 })
 /**
 你的可能跟我的有些不一样，我这里删除了原先定义的路由
