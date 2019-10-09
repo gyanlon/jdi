@@ -5,29 +5,20 @@
 			placeholder="New todo"
 			@keydown.enter="addTodo"
 		/>
-		<ul v-if="todos.length">
-			<TodoListItem
-				v-for="todo in todos"
-				:key="todo.id"
-				:todo="todo"
-				@remove="removeTodo"
-			/>
-		</ul>
-		<p v-else>
-			Nothing left in the list. Add a new todo in the input above.
-		</p>
+
+		<InputQ content="{} X {} = ()" variables="3, 5" answers="15"/>
 	</div>
 </template>
 
 <script>
 import BaseInputText from './BaseInputText.vue'
-import TodoListItem from './TodoListItem.vue'
+import InputQ from './InputQ.vue'
 
 let nextTodoId = 1
 
 export default {
 	components: {
-		BaseInputText, TodoListItem
+		BaseInputText, InputQ
 	},
   data () {
     return {
