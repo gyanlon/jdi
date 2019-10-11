@@ -21,19 +21,21 @@ export default {
 
   data: function() {
     return {
-      resultMessage: null
+      resultMessage: null,
+      score: 0
     };
   },
 
   methods: {
-    change(event) {
-      console.log(JSON.stringify(event));
+    change(res) {
+      console.log(JSON.stringify(res));
+      this.score = Math.round(parseInt(res.score)*100/parseInt(res.total));
     },
 
     check: function(event) {
       
-    //TODO:
-		this.resultMessage = "100分";
+      //TODO:
+		  this.resultMessage = this.score + "分";
     }
   }
 };
