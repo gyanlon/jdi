@@ -1,7 +1,7 @@
 <template>
   <div>
     <h3>考试中...</h3>
-    <QuestionList/>
+    <QuestionList @change='change'/>
 
     <div class="container button">
       <input type="button" class="primary-button" @click="check" value="做完了">
@@ -26,6 +26,10 @@ export default {
   },
 
   methods: {
+    change(event) {
+      console.log(JSON.stringify(event));
+    },
+
     check: function(event) {
       
     //TODO:

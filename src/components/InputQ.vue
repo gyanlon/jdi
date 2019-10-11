@@ -1,6 +1,6 @@
 <template>
 
-  <div class='question' id='parent' v-html="template"> </div>
+  <div class='question' :id='id' :score='score' v-html="template"> </div>
 
 </template>
 
@@ -11,7 +11,8 @@ export default {
       score: 0,
       content: null,
       variables: null,
-      answers: null
+      answers: null,
+      score: 0
   },
   data: function(){
     return {
@@ -23,7 +24,7 @@ export default {
   methods : {
     getInputHtml( idx ) {
 
-      return "(<input type='text' id='" + this.id + "_in" + idx + "' class='input + " + this.id + "'/>)";
+      return "(<input type='text' id='" + this.id + "_in" + idx + "' class='input " + this.id + "'/>)";
 
     },
 
@@ -49,7 +50,8 @@ export default {
 
     sendBackResponse() {
       console.log(JSON.stringify(this.result))
-      this.$emit('change', {result: this.check(this.answers, this.result)});
+      var value = {qid: this.id, score: this.check(this.answers, this.result) ? this.score : 0};
+      this.$emit('change', value);
     },
 
     check(answers, result) {
@@ -72,11 +74,11 @@ export default {
       return true;
     },
 
-    change(result, sendEvent) {
+    change(result, sendEventFunc) {
         return function (evt) {
           // console.log(evt.target.id, evt.target.value);
           result[evt.target.id] = evt.target.value;
-          sendEvent();
+          sendEventFunc();
         }
     }
   },
