@@ -33,9 +33,7 @@ export default {
       this.score = Math.round(parseInt(res.score)*100/parseInt(res.total));
     },
 
-    check: function(event) {
-      
-      //TODO:
+    check: function() {
       this.resultMessage = this.score + "分";
       this.submit = true;
     }

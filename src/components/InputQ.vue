@@ -2,8 +2,8 @@
   <div>
     <div class="question" :id="id" :score="score" v-html="template"></div>
     <div v-show="submit">
-      <span v-if="correct">OK</span>
-      <span v-if="!correct">X</span>
+      <a class="correct" v-if="correct"></a>
+      <a class="wrong" v-if="!correct"></a>
     </div>
   </div>
 </template>
@@ -120,4 +120,11 @@ div > input.input {
   padding: 8px 10px;
   border: 0px solid gray;
 }
+
+a.wrong{ display: inline-block; width: 20px;height:5px; background: red;line-height: 0;font-size:0;vertical-align: middle;-webkit-transform: rotate(45deg);}
+a.wrong:after{content:'/';display:block;width: 20px;height:5px; background: red;-webkit-transform: rotate(-90deg);}
+
+a.correct{ display: inline-block; width: 10px;height:5px; background: red;line-height: 0;font-size:0;vertical-align: middle;-webkit-transform: rotate(45deg);}
+a.correct:after{content:'/';display:block;width: 20px;height:5px; background: red;-webkit-transform: rotate(-90deg) translateY(-50%) translateX(50%);}
+     
 </style>
