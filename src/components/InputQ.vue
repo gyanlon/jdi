@@ -29,7 +29,6 @@ export default {
 
     genQuestions () {
       var varArr = this.variables.split(",");
-      // var answerArr = this.answers.split(",");
       this.HTMLcontent = this.content;
       var segs = this.HTMLcontent.split("{}");
 
@@ -48,8 +47,8 @@ export default {
       return "<div>" + this.HTMLcontent + "</div>";
     },
 
-    sendEvent() {
-      this.result = res;
+    sendBackResponse() {
+      console.log(JSON.stringify(this.result))
       this.$emit('change', {result: this.check(this.answers, this.result)});
     },
 
@@ -62,6 +61,7 @@ export default {
       }
 
       for (const [key, value] of Object.entries(result)) {
+        console.log(answerArr[i].toString(), value.toString())
         if( answerArr[i].toString() !== value.toString() ) {
           return false;
         } 
@@ -70,6 +70,14 @@ export default {
       }
 
       return true;
+    },
+
+    change(result, sendEvent) {
+        return function (evt) {
+          // console.log(evt.target.id, evt.target.value);
+          result[evt.target.id] = evt.target.value;
+          sendEvent();
+        }
     }
   },
   created() {
@@ -78,21 +86,14 @@ export default {
   mounted() {
     var x = document.getElementsByClassName("input " + this.id);
     var i;
-    res = {}; 
 
-    var sendEvent = this.sendEvent;
     for (i = 0; i < x.length; i++) {
-        // x[i].style.backgroundColor = "red";
-        x[i].addEventListener('change', function (evt) {
-          console.log(evt.target.id, evt.target.value);
-          res[evt.target.id] = evt.target.value;
-          sendEvent();
-        });
+        x[i].addEventListener('change', this.change(this.result, this.sendBackResponse));
     }
+
   }
 }
 
-var res = {}; 
 </script>
 
 <style>
