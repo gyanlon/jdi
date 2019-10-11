@@ -1,7 +1,7 @@
 <template>
   <div>
     <h3>考试中...</h3>
-    <QuestionList @change='change'/>
+    <QuestionList @change='change' :submit='submit'/>
 
     <div class="container button">
       <input type="button" class="primary-button" @click="check" value="做完了">
@@ -22,7 +22,8 @@ export default {
   data: function() {
     return {
       resultMessage: null,
-      score: 0
+      score: 0,
+      submit: false
     };
   },
 
@@ -35,7 +36,8 @@ export default {
     check: function(event) {
       
       //TODO:
-		  this.resultMessage = this.score + "分";
+      this.resultMessage = this.score + "分";
+      this.submit = true;
     }
   }
 };

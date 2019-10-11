@@ -1,72 +1,87 @@
 <template>
-
-  <div class='question' :id='id' :score='score' v-html="template"> </div>
-
+  <div>
+    <div class="question" :id="id" :score="score" v-html="template"></div>
+    <div v-show="submit">
+      <span v-if="correct">OK</span>
+      <span v-if="!correct">X</span>
+    </div>
+  </div>
 </template>
 
 <script>
 export default {
   props: {
-      id: null,
-      score: 0,
-      content: null,
-      variables: null,
-      answers: null,
-      score: 0
+    id: null,
+    score: 0,
+    content: null,
+    variables: null,
+    answers: null,
+    submit: false
   },
-  data: function(){
+  data: function() {
     return {
       HTMLcontent: null,
       result: {},
-      template: null
-    }
+      template: null,
+      correct: false
+    };
   },
-  methods : {
-    getInputHtml( idx ) {
-
-      return "(<input type='text' id='" + this.id + "_in" + idx + "' class='input " + this.id + "'/>)";
-
+  methods: {
+    getInputHtml(idx) {
+      return (
+        "(<input type='text' id='" +
+        this.id +
+        "_in" +
+        idx +
+        "' class='input " +
+        this.id +
+        "'/>)"
+      );
     },
 
-    genQuestions () {
+    genQuestions() {
       var varArr = this.variables.split(",");
       this.HTMLcontent = this.content;
       var segs = this.HTMLcontent.split("{}");
 
       this.HTMLcontent = segs[0];
-      for(var i=1; i<segs.length; i++) {
-        this.HTMLcontent += varArr[i-1] + segs[i];
+      for (var i = 1; i < segs.length; i++) {
+        this.HTMLcontent += varArr[i - 1] + segs[i];
       }
 
       segs = this.HTMLcontent.split("()");
 
       this.HTMLcontent = segs[0];
-      for( i=1; i<segs.length; i++) {
-        this.HTMLcontent += this.getInputHtml(i-1) + segs[i];
+      for (i = 1; i < segs.length; i++) {
+        this.HTMLcontent += this.getInputHtml(i - 1) + segs[i];
       }
 
       return "<div>" + this.HTMLcontent + "</div>";
     },
 
     sendBackResponse() {
-      console.log(JSON.stringify(this.result))
-      var value = {qid: this.id, score: this.check(this.answers, this.result) ? this.score : 0};
-      this.$emit('change', value);
+      console.log(JSON.stringify(this.result));
+      this.correct = this.check(this.answers, this.result);
+      var value = {
+        qid: this.id,
+        score: this.correct ? this.score : 0
+      };
+      this.$emit("change", value);
     },
 
     check(answers, result) {
       var i = 0;
       var answerArr = answers.split(",");
 
-      if(answerArr.length !== Object.keys(result).length) {
+      if (answerArr.length !== Object.keys(result).length) {
         return false;
       }
 
       for (const [key, value] of Object.entries(result)) {
-        console.log(answerArr[i].toString(), value.toString())
-        if( answerArr[i].toString() !== value.toString() ) {
+        console.log(answerArr[i].toString(), value.toString());
+        if (answerArr[i].toString() !== value.toString()) {
           return false;
-        } 
+        }
 
         i++;
       }
@@ -75,11 +90,11 @@ export default {
     },
 
     change(result, sendEventFunc) {
-        return function (evt) {
-          // console.log(evt.target.id, evt.target.value);
-          result[evt.target.id] = evt.target.value;
-          sendEventFunc();
-        }
+      return function(evt) {
+        // console.log(evt.target.id, evt.target.value);
+        result[evt.target.id] = evt.target.value;
+        sendEventFunc();
+      };
     }
   },
   created() {
@@ -90,12 +105,13 @@ export default {
     var i;
 
     for (i = 0; i < x.length; i++) {
-        x[i].addEventListener('change', this.change(this.result, this.sendBackResponse));
+      x[i].addEventListener(
+        "change",
+        this.change(this.result, this.sendBackResponse)
+      );
     }
-
   }
-}
-
+};
 </script>
 
 <style>
