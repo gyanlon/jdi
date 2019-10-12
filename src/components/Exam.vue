@@ -1,8 +1,11 @@
 <template>
-  <div>
+  <div class="exam">
     <h3 v-if='submit'>考试已完成</h3>
     <h3 v-if='!submit'>考试中...</h3>
-    <QuestionList @change='change' :submit='submit'/>
+
+    <div class="container papper">
+      <ExamPapper @change='change' :submit='submit'/>
+    </div>
 
     <div class="container button"  v-if="!submit">
       <input type="button" class="primary-button" @click="check" value="做完了">
@@ -10,20 +13,20 @@
 
     <div class="container result" v-if="submit">
       <p>考试得分：{{resultMessage}}<p>
-      <h3 v-if="score===100">不错哦</h3>
-      <h3 v-if="score>=80&&score<100">加油，再细心一点，你可以得到100分的！</h3></p>
-      <h3 v-if="score>60&&score<80">有点难度吧，不服气就<router-link to="/menu"> 点我 </router-link>再来一遍。</h3>
-      <h3 v-if="score<60">失败是成功之母，错题是最好的老师，来仔细看看我们错在哪儿了吧。<p/>不服气就<router-link to="/menu"> 点我 </router-link>再来一遍!</h3>  
+      <h4 v-if="score===100">不错哦</h4>
+      <h4 v-if="score>=80&&score<100">加油，再细心一点，你可以得到100分的！</h4></p>
+      <h4 v-if="score>60&&score<80">有点难度吧，不服气就<router-link to="/menu"> 点我 </router-link>再来一遍。</h4>
+      <h4 v-if="score<60">失败是成功之母，错题是最好的老师，来看看我们错在哪儿了吧。<p/>不服气就<router-link to="/menu"> 点我 </router-link>再来一遍!</h4>  
     </div>
   </div>
 </template>
 
 <script>
-import QuestionList from "./QuestionList.vue";
+import ExamPapper from "./ExamPapper.vue";
 
 export default {
   components: {
-    QuestionList
+    ExamPapper
   },
 
   data: function() {
@@ -75,3 +78,30 @@ export default {
   }
 };
 </script>
+
+<style>
+.exam {
+  width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.container {
+    width: 100%;
+    margin-top: 50px;
+}
+
+.papper {
+  padding: 10px;
+  text-align: left;
+  display: inline-block;
+  background-color: #fff;
+  border: 1px solid rgb(208, 228, 228);
+}
+
+.primary-button {
+  font-size: 15px;
+}
+
+</style>
+

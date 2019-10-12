@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div class="container">
+    <div>
       <div class="header">
         <div class="title">
           <span>Jimmy 测验小站</span>
