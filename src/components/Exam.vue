@@ -13,10 +13,10 @@
 
     <div class="container result" v-if="submit">
       <p>考试得分：{{resultMessage}}<p>
-      <h4 v-if="score===100">不错哦</h4>
-      <h4 v-if="score>=80&&score<100">加油，再细心一点，你可以得到100分的！</h4></p>
-      <h4 v-if="score>60&&score<80">有点难度吧，不服气就<router-link to="/menu"> 点我 </router-link>再来一遍。</h4>
-      <h4 v-if="score<60">失败是成功之母，错题是最好的老师，来看看我们错在哪儿了吧。<p/>不服气就<router-link to="/menu"> 点我 </router-link>再来一遍!</h4>  
+      <h3 v-if="score===100">不错哦</h3>
+      <h3 v-if="score>=80&&score<100">加油，再细心一点，你可以得到100分的！</h3>
+      <h3 v-if="score>60&&score<80">有点难度吧，不服气就<router-link to="/menu"> 点我 </router-link>再来一遍。</h3>
+      <h3 v-if="score<60">失败是成功之母，错题是最好的老师，来看看我们错在哪儿了吧。<p/>不服气就<router-link to="/menu"> 点我 </router-link>再来一遍!</h3>  
     </div>
   </div>
 </template>
@@ -39,7 +39,7 @@ export default {
 
   methods: {
     change(res) {
-      console.log(JSON.stringify(res));
+      // console.log(JSON.stringify(res));
       this.score = Math.round(parseInt(res.score)*100/parseInt(res.total));
     },
 
