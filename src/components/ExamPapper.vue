@@ -1,7 +1,8 @@
 
 <template>
   <div class="questionBody">
-    <div v-for="q in questions">
+	<ul>
+    <li v-for="q in questions">
       <InputQ
         :id="q.id"
         :score="q.score"
@@ -11,7 +12,8 @@
         @change="change"
         :submit="submit"
       />
-    </div>
+    </li>
+	</ul>
   </div>
 </template>
 
