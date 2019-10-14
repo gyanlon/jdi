@@ -11,7 +11,7 @@ const STORAGE_KEY='questions';
 const init_questions=[{
     id: "q1",
     score: 5,
-    pattern: "{} X {} = ()",
+    pattern: "{} &times; {} = ()",
     variables: "3,5",
     answers: "15",
     variable_extent: ["1-9", "1-9"],
@@ -19,7 +19,7 @@ const init_questions=[{
 },{ 
     id: "q2",
     score: 20,
-    pattern: "{} X {} 表示 () 的 () 倍， 又表示()个() 。",
+    pattern: "{} &times; {} 表示 () 的 () 倍， 又表示()个() 。",
     variables: "8,9",
     answers: "8,9,9,8",
     variable_extent: ["1-9", "1-9"],
