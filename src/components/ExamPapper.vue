@@ -1,7 +1,7 @@
 
 <template>
   <div class="questionBody">
-    <div v-for="q in questions" :key="q">
+    <div v-for="q in questions">
       <InputQ
         :id="q.id"
         :score="q.score"
