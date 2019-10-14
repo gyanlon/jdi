@@ -81,7 +81,7 @@ export default {
 
 <style>
 .exam {
-  width: 700px;
+  width: 300px;
   margin-left: auto;
   margin-right: auto;
 }
