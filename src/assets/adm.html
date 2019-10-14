@@ -1,0 +1,32 @@
+<script>
+const STORAGE_KEY='questions'
+const QUESTIONS=[{
+    id: "q1",
+    score: 5,
+    pattern: "{} X {} = ()",
+    variables: "3,5",
+    answers: "15"
+},{ 
+    id: "q2",
+    score: 20,
+    pattern: "{} X {} 表示 () 的 () 倍， 又表示()个() 。",
+    variables: "8,9",
+    answers: "8,9,9,8"
+},{ 
+    id: "q3",
+    score: 20,
+    pattern: "{}个{}}用乘法表示为() X () 。",
+    variables: "5,8",
+    answers: "8,5"
+}];
+</script>
+
+<a href="javascript: save()"> 保存 </a>
+
+<script>
+
+    function save() {
+        window.localStorage.setItem(STORAGE_KEY,JSON.stringify(QUESTIONS));
+    }
+
+</script>
