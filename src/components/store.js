@@ -14,7 +14,7 @@ const init_questions=[{
     pattern: "{} &times; {} = ()",
     variables: "3,5",
     answers: "15",
-    variable_extent: ["1-9", "1-9"],
+    variable_range: ["1-9", "1-9"],
     answer_alg: [ "$[1]*$[2]" ]
 },{ 
     id: "q2",
@@ -22,7 +22,7 @@ const init_questions=[{
     pattern: "{} &times; {} 表示 () 的 () 倍， 又表示()个() 。",
     variables: "8,9",
     answers: "8,9,9,8",
-    variable_extent: ["1-9", "1-9"],
+    variable_range: ["1-9", "1-9"],
     answer_alg: [ "$[1]", "$[2]", "$[2]", "$[1]" ]
 }];
 
@@ -32,9 +32,9 @@ function init() {
         var q = init_questions[i];
         // populate variables according to var constrains
         var v = "";
-        console.log(q.variable_extent);
-        for ( var n=0; n<q.variable_extent.length; n++) {
-            v += getRandomValueInConstrain( q.variable_extent[n] ) + ",";
+        console.log(q.variable_range);
+        for ( var n=0; n<q.variable_range.length; n++) {
+            v += getRandomValueInConstrain( q.variable_range[n] ) + ",";
         }
         q.variables = v.substr(0, v.length -1);
         console.log(q.variables);

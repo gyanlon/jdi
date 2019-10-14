@@ -92,7 +92,7 @@ export default {
 }
 
 .papper {
-  padding: 10px;
+  /* padding: 10px; */
   text-align: left;
   display: inline-block;
   background-color: #fff;
