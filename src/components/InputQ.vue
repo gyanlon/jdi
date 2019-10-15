@@ -78,9 +78,9 @@ export default {
         answers: this.answers
       };
       if (!this.correct) {
-        Store.appendError(data);
+        Store.appendBackup(data);
       } else {
-        Store.removeError(data);
+        Store.removeBackup(data);
       }
     },
 

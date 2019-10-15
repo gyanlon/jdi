@@ -3,6 +3,8 @@ import Router from 'vue-router'
 
 import Exam from '../components/Exam'
 import Menu from '../components/Menu'
+import Adm  from '../components/Adm'
+
 Vue.use(Router)
 
 //export default 是对外暴露这个配置
@@ -17,6 +19,11 @@ export default new Router({
         path: '/menu',
         name: 'Menu',
         component: Menu
+    },
+    {
+        path: '/adm',
+        name: 'Adm',
+        component: Adm
     }
     // {
     //     path: '/main',

@@ -18,4 +18,3 @@ new Vue({
 });
 
 Vue.config.productionTip = false;
-

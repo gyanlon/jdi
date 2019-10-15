@@ -1,6 +1,6 @@
 // import { EEXIST } from "constants";
 const STORAGE_KEY = 'questions';
-const STORAGE_ERROR = 'errors';
+const STORAGE_BACKUP = 'backups';
 
 {/* <InputQ id="q1" score=5 content="{} X {} = ()" variables="3,5" answers="15" @change="change" :submit='submit'/>
 <InputQ id="q2" score=20 content="{} X {} 表示 () 的 () 倍， 又表示()个() 。" variables="8,9" answers="8,9,9,8" @change="change" :submit='submit'/> */}
@@ -101,7 +101,7 @@ export default {
     fetch() {
         this.init();
         var qs = JSON.parse(window.localStorage.getItem(STORAGE_KEY) || '[]');
-        qs = this.rearrageIds(qs.concat(this.fetchError()));
+        qs = this.rearrageIds(qs.concat(this.fetchBackup()))
         return qs;
     },
     rearrageIds(qlist) {
@@ -115,28 +115,28 @@ export default {
     save(items) {
         window.localStorage.setItem(STORAGE_KEY, JSON.stringify(items))
     },
-    saveErrors(items) {
-        window.localStorage.setItem(STORAGE_ERROR, JSON.stringify(items))
+    saveBackups(items) {
+        window.localStorage.setItem(STORAGE_BACKUP, JSON.stringify(items))
     },
-    appendError(item) {
-        var errors = this.fetchError();
-        if (this.indexOf(errors, item) < 0) {
-            errors.push(item);
-            this.saveErrors(errors);
+    appendBackup(item) {
+        var backups = this.fetchBackup();
+        if (this.indexOf(backups, item) < 0) {
+            backups.push(item);
+            this.saveBackups(backups);
         }
     },
-    removeError(item) {
-        var errors = this.fetchError();
-        var index = this.indexOf(errors, item);
+    removeBackup(item) {
+        var backups = this.fetchBackup();
+        var index = this.indexOf(backups, item);
         while (index >= 0) {
-            errors.splice(index, 1);
-            index = this.indexOf(errors, item);
+            backups.splice(index, 1);
+            index = this.indexOf(backups, item);
         }
 
-        this.saveErrors(errors);
+        this.saveBackups(backups);
     },
-    fetchError() {
-        return JSON.parse(window.localStorage.getItem(STORAGE_ERROR) || '[]')
+    fetchBackup() {
+        return JSON.parse(window.localStorage.getItem(STORAGE_BACKUP) || '[]')
     },
     indexOf(qlist, question) {
         for (var i = 0; i < qlist.length; i++) {
