@@ -21,7 +21,7 @@ const init_questions = [{
 }, {
     id: "q2",
     score: 20,
-    pattern: "{} &times; {} 表示 () 的 () 倍， 又表示()个() 。",
+    pattern: "{} &times; {} 表示 () 的 () <b>倍</b>， 又表示() 个 () 。",
     variables: "8,9",
     answers: "8,9,9,8",
     variable_range: ["1-9", "1-9"],

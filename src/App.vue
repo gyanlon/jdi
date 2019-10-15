@@ -9,7 +9,7 @@
     </div>
 
     <div>
-      <router-view :key="$route.path"></router-view>
+      <router-view :key="$route.path" v-if="isRouterAlive"></router-view>
     </div>
   </div>
 </template>
@@ -24,6 +24,24 @@ export default {
   },
   created:function(){
        this.$router.push('menu'); // 页面加载时跳转
+  },
+  data() {
+    return {
+      isRouterAlive : true
+    }
+  },
+  provide() {
+    return {
+      reload: this.reload
+    }
+  },
+  methods: {
+    reload() {
+      this.isRouterAlive = false;
+      this.$nextTick(function(){
+        this.isRouterAlive = true;
+      })
+    }
   }
 };
 </script>
