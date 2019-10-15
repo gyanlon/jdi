@@ -9,6 +9,8 @@
 </template>
 
 <script>
+import Store from "./store.js";
+
 export default {
   props: {
     id: null,
@@ -67,6 +69,19 @@ export default {
         score: this.correct ? this.score : 0
       };
       this.$emit("change", value);
+
+      var data = {
+        id: this.id,
+        score: this.score,
+        pattern: this.content,
+        variables: this.variables,
+        answers: this.answers
+      };
+      if (!this.correct) {
+        Store.appendError(data);
+      } else {
+        Store.removeError(data);
+      }
     },
 
     check(answers, result) {
@@ -121,10 +136,41 @@ div > input.input {
   border: 0px solid gray;
 }
 
-a.wrong{ display: inline-block; width: 20px;height:5px; background: red;line-height: 0;font-size:0;vertical-align: middle;-webkit-transform: rotate(45deg);}
-a.wrong:after{content:'/';display:block;width: 20px;height:5px; background: red;-webkit-transform: rotate(-90deg);}
+a.wrong {
+  display: inline-block;
+  width: 20px;
+  height: 5px;
+  background: red;
+  line-height: 0;
+  font-size: 0;
+  vertical-align: middle;
+  -webkit-transform: rotate(45deg);
+}
+a.wrong:after {
+  content: "/";
+  display: block;
+  width: 20px;
+  height: 5px;
+  background: red;
+  -webkit-transform: rotate(-90deg);
+}
 
-a.correct{ display: inline-block; width: 10px;height:5px; background: red;line-height: 0;font-size:0;vertical-align: middle;-webkit-transform: rotate(45deg);}
-a.correct:after{content:'/';display:block;width: 20px;height:5px; background: red;-webkit-transform: rotate(-90deg) translateY(-50%) translateX(50%);}
-     
+a.correct {
+  display: inline-block;
+  width: 10px;
+  height: 5px;
+  background: red;
+  line-height: 0;
+  font-size: 0;
+  vertical-align: middle;
+  -webkit-transform: rotate(45deg);
+}
+a.correct:after {
+  content: "/";
+  display: block;
+  width: 20px;
+  height: 5px;
+  background: red;
+  -webkit-transform: rotate(-90deg) translateY(-50%) translateX(50%);
+}
 </style>
