@@ -1,6 +1,7 @@
 // import { EEXIST } from "constants";
 const STORAGE_KEY = 'questions';
 const STORAGE_BACKUP = 'backups';
+const STORAGE_UDQ = 'UDQ';
 
 {/* <InputQ id="q1" score=5 content="{} X {} = ()" variables="3,5" answers="15" @change="change" :submit='submit'/>
 <InputQ id="q2" score=20 content="{} X {} 表示 () 的 () 倍， 又表示()个() 。" variables="8,9" answers="8,9,9,8" @change="change" :submit='submit'/> */}
@@ -118,11 +119,21 @@ export default {
     saveBackups(items) {
         window.localStorage.setItem(STORAGE_BACKUP, JSON.stringify(items))
     },
+    saveUDQ(items) {
+        window.localStorage.setItem(STORAGE_UDQ, JSON.stringify(items))
+    },    
     appendBackup(item) {
         var backups = this.fetchBackup();
         if (this.indexOf(backups, item) < 0) {
             backups.push(item);
             this.saveBackups(backups);
+        }
+    },    
+    appendUDQ(item) {
+        var items = this.fetchUDQ();
+        if (this.indexOf(items, item) < 0) {
+            items.push(item);
+            this.saveUDQ(items);
         }
     },
     removeBackup(item) {
@@ -137,6 +148,9 @@ export default {
     },
     fetchBackup() {
         return JSON.parse(window.localStorage.getItem(STORAGE_BACKUP) || '[]')
+    },
+    fetchUDQ() {
+        return JSON.parse(window.localStorage.getItem(STORAGE_UDQ) || '[]')
     },
     indexOf(qlist, question) {
         for (var i = 0; i < qlist.length; i++) {

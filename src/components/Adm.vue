@@ -1,10 +1,23 @@
 <template>
-  <v-table
-            :width="1000"
-            :columns="columns"
-            :table-data="tableData"
-            :show-vertical-border="false"
-    ></v-table>
+    <div>
+        <h3> 做错的题目 </h3>
+        <v-table
+                :width="700"
+                :columns="columns"
+                :table-data="tableData"
+                :show-vertical-border="true">
+        </v-table>
+        <h3> 自定义 </h3>
+        <v-table
+                :width="700"
+                :columns="columns"
+                :table-data="tableData"
+                :show-vertical-border="true">
+        </v-table>
+        <div>
+        <a href="javascript:void" @click="save"> 增加 </a>
+        </div>
+    </div>
 </template>
 
 <script>
@@ -21,30 +34,38 @@ import {VTable,VPagination} from 'vue-easytable'
 Vue.component(VTable.name, VTable)
 Vue.component(VPagination.name, VPagination)
 
+import Store from "./store.js";
+
 export default {
   data: function() {
       return {
-          tableData: [
-              {"name":"赵伟","tel":"156*****1987","hobby":"钢琴、书法、唱歌","address":"上海市黄浦区金陵东路569号17楼"},
-              {"name":"李伟","tel":"182*****1538","hobby":"钢琴、书法、唱歌","address":"上海市奉贤区南桥镇立新路12号2楼"},
-              {"name":"孙伟","tel":"161*****0097","hobby":"钢琴、书法、唱歌","address":"上海市崇明县城桥镇八一路739号"},
-              {"name":"周伟","tel":"197*****1123","hobby":"钢琴、书法、唱歌","address":"上海市青浦区青浦镇章浜路24号"},
-              {"name":"吴伟","tel":"183*****6678","hobby":"钢琴、书法、唱歌","address":"上海市松江区乐都西路867-871号"}
-          ],
+          tableData: Store.fetchBackup(),
           columns: [
-              {field: 'name', title:'姓名', width: 100, titleAlign: 'center',columnAlign:'center'},
-              {field: 'tel', title: '手机号码', width: 260, titleAlign: 'center',columnAlign:'center'},
-              {field: 'hobby', title: '爱好', width: 330, titleAlign: 'center',columnAlign:'center'},
-              {field: 'address', title: '地址', titleAlign: 'center',columnAlign:'left'}
+              {field: 'id', title:'ID', width: 100, titleAlign: 'center',columnAlign:'center'},
+              {field: 'score', title: '分数', width: 100, titleAlign: 'center',columnAlign:'center'},
+              {field: 'pattern', title: '题干', width: 300, titleAlign: 'center',columnAlign:'left'},
+              {field: 'variables', title: '参数', width: 100, titleAlign: 'center',columnAlign:'center'},
+              {field: 'answers', title: '答案', titleAlign: 'center',columnAlign:'center'}
           ]
       }
   }
 }
 </script>
 
-<style scoped>
-.input {
-  width: 15px;
-  padding: 8px 10px;
-  border: 0px solid gray;
+<style>
+.v-table-views {
+  width: 300px;
+  margin-left: auto;
+  margin-right: auto;
 }
+.v-table-header-row {
+  background-color: rgb(243, 243, 243)
+}
+div.v-table-body-cell {
+  word-wrap: break-word;
+  /* height: auto !important; */
+  line-height: 20px !important;
+  overflow: visible;
+  white-space: normal;
+}
+</style>
