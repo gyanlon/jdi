@@ -4,6 +4,7 @@ import Router from 'vue-router'
 import Exam from '../components/Exam'
 import Menu from '../components/Menu'
 import Adm  from '../components/Adm'
+import Test  from '../components/Test'
 
 Vue.use(Router)
 
@@ -24,6 +25,11 @@ export default new Router({
         path: '/adm',
         name: 'Adm',
         component: Adm
+    },
+    {
+        path: '/test',
+        name: 'Test',
+        component: Test
     }
     // {
     //     path: '/main',
