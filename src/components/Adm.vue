@@ -1,5 +1,5 @@
 <template>
-    <div class="adm">
+    <div class="col-md-24 col-sm-24 col-xs-24 adm" >
         <h3> 做错的题目 </h3>
         <v-table
                 :width="700"
@@ -15,17 +15,18 @@
                 :show-vertical-border="true"
                 :select-change = "select">
         </v-table>
-        <div class="buttons" style="float:center">
+        <div class="list buttons">
             <a href="javascript:;"  @click="add">添加</a> &nbsp;&nbsp;
-            <a href="javascript:;" @click="modify">修改</a>&nbsp;&nbsp;
+            <!-- <a href="javascript:;" @click="modify">修改</a>&nbsp;&nbsp; -->
             <a href="javascript:;" @click="del">删除</a>
         </div>
 
         <div class="form" v-if="create">
-            题干：<input type="text" id="pattern" v-model="form.pattern"></input>
-            分数：<input type="text" id="score" v-model="form.score"></input>
-            参数：<input type="text" id="variables" v-model="form.variables"></input>
-            答案：<input type="text" id="answers" v-model="form.answers"></input>
+            题干：<textarea type="text" id="pattern" v-model="form.pattern" ></textarea>
+            <p>
+            分数：<input type="text" id="score" v-model="form.score" style="text-align: left;" ></input>
+            参数范围：<input type="text" id="variable_range" v-model="form.variable_range"></input>
+            答案算法：<input type="text" id="answer_alg" v-model="form.answer_alg"></input>
             <div class="buttons">
                 <a href="javascript:;" @click="save"> 保存 </a>
             </div>
@@ -64,43 +65,48 @@ export default {
               {width: 60, titleAlign: 'center',columnAlign:'center',type: 'selection'},
               {field: 'pattern', title: '题干', width: 300, titleAlign: 'center',columnAlign:'left'},
               {field: 'score', title: '分数', width: 100, titleAlign: 'center',columnAlign:'center'},
-              {field: 'variables', title: '参数', width: 100, titleAlign: 'center',columnAlign:'center'},
-              {field: 'answers', title: '答案', titleAlign: 'center',columnAlign:'center'}
+              {field: 'variable_range', title: '参数范围', width: 100, titleAlign: 'center',columnAlign:'center'},
+              {field: 'answer_alg', title: '答案算法', titleAlign: 'center',columnAlign:'center'}
           ],
           create: false,
           form: {
               pattern: "",
-              score: 0,
-              variables: "",
-              answers: ""
+              score: 5,
+              variable_range: "",
+              answer_alg: ""
           },
           selectObj: []
       }
   },
-
+  inject: ['reload'], // https://juejin.im/entry/5b5ac53c5188251abb46c250
   methods: {
       add() {
           this.create = true;
       },
       save() {
-          var newQ = {
+
+          if(this.form.pattern && this.form.score && this.form.answer_alg) {
+            var newQ = {
               pattern: this.form.pattern,
               score: this.form.score,
-              variables: this.form.variables,
-              answers: this.form.answers
+              variable_range: this.form.variable_range.split(","),
+              answer_alg: this.form.answer_alg.split(","),
+              variables: "",
+              answers: ""
+            }
+            Store.appendUDQ(newQ);
           }
 
-          Store.appendUDQ(newQ);
           this.create = false;
 
           this.form = {
               pattern: "",
               score: 0,
-              variables: "",
-              answers: ""
+              variable_range: "",
+              answanswer_alg: ""
           };
 
-          this.udqData = Store.fetchUDQ();
+          this.reload();
       },
       select(obj){
         this.selectObj=[];
@@ -111,15 +117,20 @@ export default {
 
       },
       del() {
-
+          for(var i=0; i<this.selectObj.length; i++) {
+              Store.removeUDQ(this.selectObj[i])
+          }
+          this.reload();
       }
   }
 }
 </script>
 
 <style>
+.form,
+.list.buttons,
 .v-table-views {
-  width: 300px;
+  width: 700px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -132,5 +143,17 @@ div.v-table-body-cell {
   line-height: 20px !important;
   overflow: visible;
   white-space: normal;
+}
+div.form {
+    height: 30px; 
+    text-align: left;
+}
+div.form  > textarea {
+    width: 650px; 
+    height: 50px; 
+}
+.list.buttons,
+div.form  > .buttons {
+    text-align: right;
 }
 </style>

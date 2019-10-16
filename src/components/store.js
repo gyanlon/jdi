@@ -82,8 +82,13 @@ function randomFrom(lowerValue, upperValue) {
 export default {
     init() {
         console.log("init");
-        for (var i = 0; i < init_questions.length; i++) {
-            var q = init_questions[i];
+        var qs = init_questions.concat(this.fetchUDQ());
+        qs = this.initQuestions(qs);
+        window.localStorage.setItem(STORAGE_KEY, JSON.stringify(qs));
+    },
+    initQuestions(qs) {
+        for (var i = 0; i < qs.length; i++) {
+            var q = qs[i];
             // populate variables according to var constrains
             var v = "";
             console.log(q.variable_range);
@@ -91,13 +96,13 @@ export default {
                 v += getRandomValueInConstrain(q.variable_range[n]) + ",";
             }
             q.variables = v.substr(0, v.length - 1);
-            console.log(q.variables);
+            console.log("variables", q.variables);
 
             // populate answers accoring to alg
             q.answers = getAnswerByAlg(q.variables, q.answer_alg);
         }
 
-        window.localStorage.setItem(STORAGE_KEY, JSON.stringify(init_questions));
+        return qs;
     },
     fetch() {
         this.init();
@@ -131,7 +136,7 @@ export default {
     },    
     appendUDQ(item) {
         var items = this.fetchUDQ();
-        if (this.indexOf(items, item) < 0) {
+        if (this.indexOfUDQ(items, item) < 0) {
             items.push(item);
             this.saveUDQ(items);
         }
@@ -146,6 +151,16 @@ export default {
 
         this.saveBackups(backups);
     },
+    removeUDQ(item) {
+        var udqs = this.fetchUDQ();
+        var index = this.indexOfUDQ(udqs, item);
+        while (index >= 0) {
+            udqs.splice(index, 1);
+            index = this.indexOfUDQ(udqs, item);
+        }
+
+        this.saveUDQ(udqs);
+    },
     fetchBackup() {
         return JSON.parse(window.localStorage.getItem(STORAGE_BACKUP) || '[]')
     },
@@ -155,11 +170,21 @@ export default {
     indexOf(qlist, question) {
         for (var i = 0; i < qlist.length; i++) {
             var q = qlist[i];
-            if (q.pattern === question.pattern && q.variables === question.variables) {
+            if (q.pattern === question.pattern && (q.variables === question.variables || (!q.variables && !question.variables)  )) {
                 return i;
             }
         }
 
         return -1;
-    }
+    },
+    indexOfUDQ(qlist, question) {
+        for (var i = 0; i < qlist.length; i++) {
+            var q = qlist[i];
+            if (q.pattern === question.pattern) {
+                return i;
+            }
+        }
+
+        return -1;
+    }    
 }

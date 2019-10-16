@@ -131,7 +131,7 @@ export default {
 
 <style>
 div > input.input {
-  width: 15px;
+  width: 35px;
   padding: 8px 10px;
   border: 0px solid gray;
 }
