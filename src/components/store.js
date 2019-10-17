@@ -89,13 +89,13 @@ function randomFrom(lowerValue, upperValue) {
 export default {
     init() {
         console.log("init");
-        var qs = init_questions.concat(this.fetchUDQ());
+        var qs = init_questions.concat(this.fetchActiveUDQ());
         qs = this.initQuestions(qs);
         window.localStorage.setItem(STORAGE_KEY, JSON.stringify(qs));
     },
     initQuestions(qs) {
         for (var i = 0; i < qs.length; i++) {
-            initQuestion(qs[i]);
+            this.initQuestion(qs[i]);
         }
 
         return qs;
@@ -192,6 +192,17 @@ export default {
     },
     fetchUDQ() {
         return JSON.parse(window.localStorage.getItem(STORAGE_UDQ) || '[]')
+    },
+    fetchActiveUDQ() {
+        var udqs = this.fetchUDQ();
+        var list = [];
+        for (var i = 0; i < udqs.length; i++) {
+            if(udqs[i].active) {
+                list.push(udqs[i]);
+            }
+        }
+
+        return list;
     },
     indexOf(qlist, question) {
         for (var i = 0; i < qlist.length; i++) {
