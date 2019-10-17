@@ -32,7 +32,7 @@ const init_questions = [{
 function getAnswerByAlg(vars, algs) {
     var result = "";
 
-    var answersArr = getArgs(vars, algs);
+    var answersArr = getAnswers(vars, algs);
     for (var i = 0; i < answersArr.length; i++) {
         result += answersArr[i] + ","
     }
@@ -42,7 +42,7 @@ function getAnswerByAlg(vars, algs) {
     return result;
 }
 
-function getArgs(vars, algs) {
+function getAnswers(vars, algs) {
     var result = [];
 
     for (var i = 0; i < algs.length; i++) {
@@ -52,6 +52,13 @@ function getArgs(vars, algs) {
         var varArr = vars.split(",");
         for (var n = 0; n < varArr.length; n++) {
             adjustArr[n + 1] = varArr[n];
+
+            // if var is number, parse string to number
+            // Note: it's a piece of dangerouse code, should use [] type for variables definition, not a string.
+            var reg = /^\d+$/;
+            if(reg.test(adjustArr[n + 1])) {
+                adjustArr[n + 1] = parseInt(adjustArr[n + 1]);
+            }
         }
 
         // 这是一段神秘的代码， eval 传参
@@ -88,21 +95,24 @@ export default {
     },
     initQuestions(qs) {
         for (var i = 0; i < qs.length; i++) {
-            var q = qs[i];
-            // populate variables according to var constrains
-            var v = "";
-            console.log(q.variable_range);
-            for (var n = 0; n < q.variable_range.length; n++) {
-                v += getRandomValueInConstrain(q.variable_range[n]) + ",";
-            }
-            q.variables = v.substr(0, v.length - 1);
-            console.log("variables", q.variables);
-
-            // populate answers accoring to alg
-            q.answers = getAnswerByAlg(q.variables, q.answer_alg);
+            initQuestion(qs[i]);
         }
 
         return qs;
+    },
+    initQuestion(q) {
+        // populate variables according to var constrains
+        var v = "";
+        console.log(q.variable_range);
+        for (var n = 0; n < q.variable_range.length; n++) {
+            v += getRandomValueInConstrain(q.variable_range[n]) + ",";
+        }
+        q.variables = v.substr(0, v.length - 1);
+        console.log("variables", q.variables);
+
+        // populate answers accoring to alg
+        q.answers = getAnswerByAlg(q.variables, q.answer_alg);
+        return q;
     },
     fetch() {
         this.init();
@@ -159,6 +169,22 @@ export default {
             index = this.indexOfUDQ(udqs, item);
         }
 
+        this.saveUDQ(udqs);
+    },
+    activateUDQ(item) {
+        console.log("activate:", JSON.stringify(item))
+        var udqs = this.fetchUDQ();
+        var index = this.indexOfUDQ(udqs, item);
+        this.initQuestion( udqs[index] );
+        if( confirm(JSON.stringify(udqs[index]))) {
+            udqs[index].active = true;
+            this.saveUDQ(udqs);
+        }
+    },
+    inactivateUDQ(item) {
+        var udqs = this.fetchUDQ();
+        var index = this.indexOfUDQ(udqs, item);
+        udqs[index].active = false;
         this.saveUDQ(udqs);
     },
     fetchBackup() {

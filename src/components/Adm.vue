@@ -18,6 +18,8 @@
         <div class="list buttons">
             <a href="javascript:;"  @click="add">添加</a> &nbsp;&nbsp;
             <!-- <a href="javascript:;" @click="modify">修改</a>&nbsp;&nbsp; -->
+            <a href="javascript:;" @click="activate">启用</a>&nbsp;&nbsp;
+            <a href="javascript:;" @click="inactivate">停用</a>&nbsp;&nbsp;
             <a href="javascript:;" @click="del">删除</a>
         </div>
 
@@ -62,11 +64,12 @@ export default {
               {field: 'answers', title: '答案', titleAlign: 'center',columnAlign:'center'}
           ],
           udqColumns: [
-              {width: 60, titleAlign: 'center',columnAlign:'center',type: 'selection'},
-              {field: 'pattern', title: '题干', width: 300, titleAlign: 'center',columnAlign:'left'},
-              {field: 'score', title: '分数', width: 100, titleAlign: 'center',columnAlign:'center'},
-              {field: 'variable_range', title: '参数范围', width: 100, titleAlign: 'center',columnAlign:'center'},
-              {field: 'answer_alg', title: '答案算法', titleAlign: 'center',columnAlign:'center'}
+              {width: 40, titleAlign: 'center',columnAlign:'center',type: 'selection'},
+              {field: 'pattern', title: '题干', width: 280, titleAlign: 'center',columnAlign:'left'},
+              {field: 'score', title: '分数', width: 50, titleAlign: 'center',columnAlign:'center'},
+              {field: 'variable_range', title: '参数范围', width: 140, titleAlign: 'center',columnAlign:'center'},
+              {field: 'answer_alg', title: '答案算法', width: 140, titleAlign: 'center',columnAlign:'center'},
+              {field: 'active', title: '是否启用', titleAlign: 'center',columnAlign:'center'}
           ],
           create: false,
           form: {
@@ -92,7 +95,8 @@ export default {
               variable_range: this.form.variable_range.split(","),
               answer_alg: this.form.answer_alg.split(","),
               variables: "",
-              answers: ""
+              answers: "",
+              active: false
             }
             Store.appendUDQ(newQ);
           }
@@ -119,6 +123,18 @@ export default {
       del() {
           for(var i=0; i<this.selectObj.length; i++) {
               Store.removeUDQ(this.selectObj[i])
+          }
+          this.reload();
+      },
+      activate() {
+          for(var i=0; i<this.selectObj.length; i++) {
+              Store.activateUDQ(this.selectObj[i])
+          }
+          this.reload();
+      },
+      inactivate() {
+          for(var i=0; i<this.selectObj.length; i++) {
+              Store.inactivateUDQ(this.selectObj[i])
           }
           this.reload();
       }
