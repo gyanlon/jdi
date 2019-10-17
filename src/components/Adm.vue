@@ -172,4 +172,8 @@ div.form  > textarea {
 div.form  > .buttons {
     text-align: right;
 }
+
+.v-table-header-row .v-checkbox {
+    display: none;
+}
 </style>
