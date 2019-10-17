@@ -173,4 +173,8 @@ a.correct:after {
   background: red;
   -webkit-transform: rotate(-90deg) translateY(-50%) translateX(50%);
 }
+
+div.question {
+  margin-right: 5px;
+}
 </style>
