@@ -20,6 +20,7 @@
             <!-- <a href="javascript:;" @click="modify">修改</a>&nbsp;&nbsp; -->
             <a href="javascript:;" @click="activate">启用</a>&nbsp;&nbsp;
             <a href="javascript:;" @click="inactivate">停用</a>&nbsp;&nbsp;
+            <a href="javascript:;" @click="modify">修改</a>&nbsp;&nbsp;
             <a href="javascript:;" @click="del">删除</a>
         </div>
 
@@ -87,13 +88,22 @@ export default {
           this.create = true;
       },
       save() {
+          console.log(Store.indexOfUDQ(this.form))
+          var udqs = Store.fetchUDQ();
+          if(Store.indexOfUDQ(udqs, this.form) >=0 ) {
+              if(confirm( "是否覆盖已存在的记录" )) {
+                  Store.removeUDQ(this.selectObj[0]);
+              } else {
+                  return;
+              }
+          }
 
           if(this.form.pattern && this.form.score && this.form.answer_alg) {
             var newQ = {
               pattern: this.form.pattern,
               score: this.form.score,
-              variable_range: this.form.variable_range.split(","),
-              answer_alg: this.form.answer_alg.split(","),
+              variable_range: Array.isArray(this.form.variable_range) ? this.form.variable_range : this.form.variable_range.split(","),
+              answer_alg: Array.isArray(this.form.answer_alg) ? this.form.answer_alg : this.form.answer_alg.split(","),
               variables: "",
               answers: "",
               active: false
@@ -118,7 +128,16 @@ export default {
         console.log(JSON.stringify(this.selectObj))
       },
       modify() {
-
+          if(this.selectObj.length === 1) {
+              this.create = true;
+              var q = this.selectObj[0];
+              this.form.pattern = q.pattern;
+              this.form.score = q.score;
+              this.form.variable_range = q.variable_range;
+              this.form.answer_alg = q.answer_alg;             
+          } else {
+              alert("请选择且仅选择一条记录！")
+          }
       },
       del() {
           for(var i=0; i<this.selectObj.length; i++) {
