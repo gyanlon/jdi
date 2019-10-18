@@ -25,7 +25,8 @@
         </div>
 
         <div class="form" v-if="create">
-            题干：<textarea type="text" id="pattern" v-model="form.pattern" ></textarea>
+            <span class="close" @click="closeForm">X</span>
+            题干：<textarea type="text" id="pattern" v-model="form.pattern" ></textarea><span class="helpicon" @click="openHelp"> ? </span>
             <p>
             分数：<input type="text" id="score" v-model="form.score" style="text-align: left;" ></input>
             参数范围：<input type="text" id="variable_range" v-model="form.variable_range"></input>
@@ -33,6 +34,26 @@
             <div class="buttons">
                 <a href="javascript:;" @click="save"> 保存 </a>
             </div>
+        </div>
+
+        <div class="help" v-if="help">
+            <span class="close" @click="closeHelp">X</span>
+            <ul>
+            <li><b>题干</b> ：支持生成随机参数
+                <ul>
+                <li>{} ：题干中英文的{}表示随机参数, 可以在后面配置的参数范围内随机取数。</li>
+                <li>() ：题干中英文的()表示需要填写的内容。</li>
+                </ul>
+               
+            <li><b>参数范围</b>：题干中的参数的取值范围，比如1-9，生成题目时，会在参数范围内随机取一个数。如果有多个参数，需要用,(英文的,)分开。</li>
+            <li><b>答案算法</b>：如果有参数，答案与参数的算法关系！请中$[1]表示第一个参数</li>
+            <li>
+                <b>示例：</b> 一位数求和：<br>
+                题干：{} + {} = ()<br>
+                参数范围：1-9，1-9<br>
+                答案算法：$[1]+$[2]
+            </li>    
+            </ul>
         </div>
     </div>
 </template>
@@ -79,7 +100,8 @@ export default {
               variable_range: "",
               answer_alg: ""
           },
-          selectObj: []
+          selectObj: [],
+          help: false
       }
   },
   inject: ['reload'], // https://juejin.im/entry/5b5ac53c5188251abb46c250
@@ -156,6 +178,16 @@ export default {
               Store.inactivateUDQ(this.selectObj[i])
           }
           this.reload();
+      },
+      openHelp() {
+          this.help = true;
+      },
+      closeHelp() {
+          this.help = false;
+      },
+      closeForm() {
+          this.create = false;
+          this.help = false;
       }
   }
 }
@@ -163,6 +195,7 @@ export default {
 
 <style>
 .form,
+.help,
 .list.buttons,
 .v-table-views {
   width: 700px;
@@ -179,12 +212,11 @@ div.v-table-body-cell {
   overflow: visible;
   white-space: normal;
 }
-div.form {
-    height: 30px; 
+div.form, div.help{
     text-align: left;
 }
 div.form  > textarea {
-    width: 650px; 
+    width: 610px; 
     height: 50px; 
 }
 .list.buttons,
@@ -194,5 +226,25 @@ div.form  > .buttons {
 
 .v-table-header-row .v-checkbox {
     display: none;
+}
+
+.form, .help {
+    padding: 10px;
+    margin: 5px auto;
+    border: 1px solid gray;
+}
+
+.form .helpicon {
+    color:green; 
+    font-weight: bold;
+    margin-left: 10px;
+    display: inline-block;
+}
+
+span.close {
+    text-align: right;
+    display: inline-block;
+    width: 100%;
+    color: red;
 }
 </style>
