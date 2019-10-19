@@ -71,16 +71,24 @@ function getAnswers(vars, algs) {
     return result;
 }
 
+var vMap = {};
 function getRandomValueInConstrain(ex) {
     console.log("ex=", ex);
     var random = ex;
 
     if (ex.indexOf("-") > 0) {
         random = randomFrom(parseInt(ex.split("-")[0]), parseInt(ex.split("-")[1]));
+    } else if(isVarible(ex)) {
+        random = vMap[ex];
     }
 
     console.log("random:", random);
     return random;
+}
+
+function isVarible(str) {
+    var varReg = /^\$\[\d+\]$/;
+    return varReg.test(str);
 }
 
 function randomFrom(lowerValue, upperValue) {
@@ -101,11 +109,15 @@ export default {
         return qs;
     },
     initQuestion(q) {
+        vMap = {};
         // populate variables according to var constrains
         var v = "";
         console.log(q.variable_range);
         for (var n = 0; n < q.variable_range.length; n++) {
-            v += getRandomValueInConstrain(q.variable_range[n]) + ",";
+            var vn = getRandomValueInConstrain(q.variable_range[n])
+            vMap["$[" + (n+1) + "]"] = vn;
+            // alert(JSON.stringify(vMap))
+            v += vn + ",";
         }
         q.variables = v.substr(0, v.length - 1);
         console.log("variables", q.variables);
