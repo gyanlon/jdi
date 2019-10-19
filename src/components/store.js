@@ -115,7 +115,7 @@ export default {
         console.log(q.variable_range);
         for (var n = 0; n < q.variable_range.length; n++) {
             var vn = getRandomValueInConstrain(q.variable_range[n])
-            vMap["$[" + (n+1) + "]"] = vn;
+            vMap["$[" + (n+1) + "]"] = vn; // to cache previous variables
             // alert(JSON.stringify(vMap))
             v += vn + ",";
         }

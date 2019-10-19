@@ -45,7 +45,7 @@
                 <li>() ：题干中英文的()表示需要填写的内容。</li>
                 </ul>
                
-            <li><b>参数范围</b>：题干中的参数的取值范围，比如1-9，生成题目时，会在参数范围内随机取一个数。如果有多个参数，需要用,(英文的,)分开。</li>
+            <li><b>参数范围</b>：题干中的参数的取值范围，比如1-9，生成题目时，会在参数范围内随机取一个数。如果有多个参数，需要用,(英文的,)分开。也支持$[n]表示前面的参数。</li>
             <li><b>答案算法</b>：如果有参数，答案与参数的算法关系！请中$[1]表示第一个参数</li>
             <li>
                 <b>示例：</b> 一位数求和：<br>
@@ -124,8 +124,8 @@ export default {
             var newQ = {
               pattern: this.form.pattern,
               score: this.form.score,
-              variable_range: Array.isArray(this.form.variable_range) ? this.form.variable_range : this.form.variable_range.split(","),
-              answer_alg: Array.isArray(this.form.answer_alg) ? this.form.answer_alg : this.form.answer_alg.split(","),
+              variable_range: Array.isArray(this.form.variable_range) ? this.form.variable_range : this.form.variable_range.replace(/ /g,"").split(","),
+              answer_alg: Array.isArray(this.form.answer_alg) ? this.form.answer_alg : this.form.answer_alg.replace(/ /g,"").this.form.answer_alg.split(","),
               variables: "",
               answers: "",
               active: false
