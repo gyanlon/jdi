@@ -125,7 +125,7 @@ export default {
               pattern: this.form.pattern,
               score: this.form.score,
               variable_range: Array.isArray(this.form.variable_range) ? this.form.variable_range : this.form.variable_range.replace(/ /g,"").split(","),
-              answer_alg: Array.isArray(this.form.answer_alg) ? this.form.answer_alg : this.form.answer_alg.replace(/ /g,"").this.form.answer_alg.split(","),
+              answer_alg: Array.isArray(this.form.answer_alg) ? this.form.answer_alg : this.form.answer_alg.replace(/ /g,"").split(","),
               variables: "",
               answers: "",
               active: false
