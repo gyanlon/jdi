@@ -14,10 +14,10 @@ const STORAGE_UDQ = 'UDQ';
 const init_questions = [{
     id: "q1",
     score: 5,
-    pattern: "{} &times; {} = ()",
-    variables: "3,5",
-    answers: "15",
-    variable_range: ["1-9", "1-9"],
+    pattern: "() &divide; {} = {}",
+    variables: "25,5",
+    answers: "5",
+    variable_range: ["1-9", "0-10"],
     answer_alg: ["$[1]*$[2]"]
 }, {
     id: "q2",
