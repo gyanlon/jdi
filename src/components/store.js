@@ -19,14 +19,6 @@ const init_questions = [{
     answers: "5",
     variable_range: ["1-9", "0-10"],
     answer_alg: ["$[1]*$[2]"]
-}, {
-    id: "q2",
-    score: 20,
-    pattern: "{} &times; {} 表示 () 的 () <b>倍</b>， 又表示() 个 () 。",
-    variables: "8,9",
-    answers: "8,9,9,8",
-    variable_range: ["1-9", "1-9"],
-    answer_alg: ["$[1]", "$[2]", "$[2]", "$[1]"]
 }];
 
 function getAnswerByAlg(vars, algs) {
